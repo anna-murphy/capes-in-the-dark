@@ -1,0 +1,48 @@
+---
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+
+import "@styles/layout.css";
+import "@styles/reset.css";
+---
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="author" content="Anna Murphy">
+		<meta name="description" content="Capes in the Dark -- A Game of Superpowers">
+		<meta name="keywords" content="rpgs, ttrpgs, indie, actual play, capes, capes in the dark">
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Capes in the Dark - {title}</title>
+	</head>
+	<body>
+		<div class="page-wrapper">
+			<header>Capes in the Dark - {title}</header>
+			<main class="full-bleed-wrapper">
+				<slot />
+			</main>
+			<div class="spacer"></div>
+			<footer></footer>
+		</div>
+	</body>
+</html>
+
+<style scoped>
+	.page-wrapper {
+		width: 100%;
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		justify-content: flex-start;
+	}
+
+	.spacer {
+		flex: 1;
+	}
+</style>
