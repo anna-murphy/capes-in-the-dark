@@ -1,14 +1,31 @@
 interface ImportMetaEnv {
-  readonly FIREBASE_API_KEY: string;
-  readonly FIREBASE_AUTH_DOMAIN: string;
-  readonly FIREBASE_PROJECT_ID: string;
-  readonly FIREBASE_STORAGE_BUCKET: string;
-  readonly FIREBASE_MESSAGING_SENDER_ID: string;
-  readonly FIREBASE_APP_ID: string;
+  readonly PUBLIC_FIREBASE_API_KEY: string;
+  readonly PUBLIC_FIREBASE_AUTH_DOMAIN: string;
+  readonly PUBLIC_FIREBASE_PROJECT_ID: string;
+  readonly PUBLIC_FIREBASE_STORAGE_BUCKET: string;
+  readonly PUBLIC_FIREBASE_MESSAGING_SENDER_ID: string;
+  readonly PUBLIC_FIREBASE_APP_ID: string;
+  readonly PUBLIC_EMULATORS: string;
 }
 
 interface ImportMeta {
   readonly env: ImportMetaEnv;
+}
+
+type EpisodeType = "full" | "trailer" | "bonus";
+
+interface EpisodeMetadata {
+  season: number;
+  episode: number;
+  transcriptUrl?: string;
+  type?: EpisodeType;
+  explicit: boolean;
+}
+
+interface EpisodeFileData {
+  url: string;
+  size: number;
+  duration: number;
 }
 
 interface PodcastEpisode {
@@ -17,18 +34,32 @@ interface PodcastEpisode {
   description: string;
   publishDate: Date;
   imageLink: string;
-  metadata: {
-    season: number;
-    episode: number;
-    transcriptUrl?: string;
-    type?: "full" | "trailer" | "bonus";
-    explicit: boolean;
-  };
-  fileData: {
-    url: string;
-    size: number;
-    duration: number;
-  };
+  metadata: EpisodeMetadata;
+  fileData: EpisodeFileData;
+}
+
+interface PodcastContact {
+  site: string;
+  author: string;
+  owner: string;
+  email: string;
+}
+
+type PodcastType = "serial";
+type YesNo = "yes" | "no";
+interface PodcastCategory {
+  category: string;
+  subCategory?: string;
+}
+type PodcastLanguage = "en-us";
+
+interface PodcastMetadata {
+  type: PodcastType;
+  locked: YesNo;
+  complete: YesNo;
+  categories: PodcastCategory[];
+  language: PodcastLanguage;
+  explicit: boolean;
 }
 
 interface PodcastChannel {
@@ -36,18 +67,11 @@ interface PodcastChannel {
   description: string;
   feedUrl: string;
   image: string;
-  contact: {
-    site: string;
-    author: string;
-    owner: string;
-    email: string;
-  };
-  metadata: {
-    type: "serial";
-    locked: "yes" | "no";
-    complete: "yes" | "no";
-    categories: Array<{ category: string; subCategory?: string }>;
-    language: "en-us";
-    explicit: boolean;
-  };
+  contact: PodcastContact;
+  metadata: PodcastMetadata;
 }
+
+type SubmitCallback = Exclude<
+  JSX.IntrinsicElements["form"]["onSubmit"],
+  undefined
+>;

@@ -12,14 +12,23 @@
     "deploy": "yarn build && firebase deploy",
     "lint": "eslint src --ext .astro,.js,.ts,.json",
     "format": "prettier --write .",
-    "emulators": "firebase emulators:start",
-    "emulators:seed": "tsx scripts/seed.ts"
+    "emulators": "firebase emulators:start --import .firebaseEmulators",
+    "emulators:seed": "tsx scripts/seed.ts",
+    "emulators:set": "tsx scripts/set.ts",
+    "emulators:reset": "rm -rf .firebaseEmulators && yarn emulators:set",
+    "fetch:citwm": "curl https://capes-in-the-dark.web.app/feeds/capes-in-the-west-march/rss.xml",
+    "fetch:citwm:emulated": "curl localhost:5001/capes-in-the-dark/us-central1/feeds/capes-in-the-west-march/rss.xml"
   },
   "dependencies": {
     "@astrojs/check": "^0.5.6",
+    "@astrojs/react": "^3.1.0",
     "@astrojs/rss": "^4.0.5",
+    "@types/react": "^18.2.66",
+    "@types/react-dom": "^18.2.22",
     "astro": "^4.4.15",
     "firebase": "^10.8.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "typescript": "5.4"
   },
   "devDependencies": {
