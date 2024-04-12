@@ -8,6 +8,7 @@ export const citwmFeed: Route = {
   handler: async function (_req: Request, res: Response) {
     try {
       const rssFeed = await getMostRecentRss("Capes in the West March");
+      res.setHeader("content-type", "application/rss+xml ");
       res.status(200).send(rssFeed.rss);
     } catch (ex) {
       res.sendStatus(404);

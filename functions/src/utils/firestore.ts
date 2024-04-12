@@ -1,9 +1,10 @@
 import { initializeApp } from "firebase-admin";
-import { Timestamp, getFirestore } from "firebase-admin/firestore";
 import {
-  FirestoreEvent,
-  QueryDocumentSnapshot,
-} from "firebase-functions/v2/firestore";
+  DocumentSnapshot,
+  Timestamp,
+  getFirestore,
+} from "firebase-admin/firestore";
+import { Change, FirestoreEvent } from "firebase-functions/v2/firestore";
 import { PodcastChannel, PodcastEpisode, RssDocument } from "./types";
 
 initializeApp();
@@ -68,7 +69,12 @@ export async function getMostRecentRss(feed: string) {
  * @returns {T | null}
  */
 export function getDataFromEvent<T>(
-  event: FirestoreEvent<QueryDocumentSnapshot | undefined>,
+  event: FirestoreEvent<Change<DocumentSnapshot> | undefined>,
 ) {
-  return event.data ? (event.data.data() as T) : null;
+  if (event === undefined) return null;
+  const eventData = event.data; //event.data.after.data();
+  if (eventData === undefined) return null;
+  const afterData = eventData.after.data();
+  if (afterData === undefined) return null;
+  return afterData as T;
 }
