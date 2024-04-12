@@ -1,4 +1,49 @@
 import React from "react";
+/*
+import { EpisodeForm } from "@admin-portal/components/EpisodeForm";
+import { firestore, storage } from "@admin-portal/utils/firebase";
+import { getDownloadURL, getMetadata, ref, uploadBytes } from "firebase/storage";
+import { addDoc, collection } from "firebase/firestore";
+
+function pad(num: number, padSize = 3): string {
+  return (Array.from(Array(padSize), () => "0").join("") + num).slice(-1 * padSize);
+}
+
+async function uploadAudio(
+  audioFile: File,
+  season: number,
+  episode: number,
+  title: string,
+): Promise<{ downloadUrl: string; size: number }> {
+  const splitOnDot = audioFile.name.split(".");
+  const path = `recordings/citwm-s${pad(season, 3)}-e${pad(episode, 3)}-${title.replaceAll(" ", "_")}.${splitOnDot[splitOnDot.length - 1]}`;
+  const audioRef = ref(storage, path);
+  await uploadBytes(audioRef, audioFile, {
+    customMetadata: {
+      metadata: JSON.stringify({ season, episode, title }),
+    },
+  });
+  const downloadUrl = await getDownloadURL(audioRef);
+  const metadata = await getMetadata(audioRef);
+  return { downloadUrl, size: metadata.size };
+}
+
+async function makeEpisodeDocument(episode: PodcastEpisode): Promise<void> {
+  const collectionRef = collection(firestore, "api/v1/episodes");
+  await addDoc(collectionRef, episode);
+}
+
+export function Upload(): JSX.Element {
+  return (
+    <>
+      <h1>Upload an Episode</h1>
+      <EpisodeForm submitLabel="Upload" submit={makeEpisodeDocument} parseFile={uploadAudio} />
+    </>
+  );
+}
+*/
+
+
 import {
   FileInput,
   NumberInput,
@@ -137,6 +182,7 @@ export function Upload(): JSX.Element {
 
   return (
     <>
+      <h1>Upload an Episode</h1>
       <form onSubmit={submit}>
         <TextInput label="Episode Title" value={title} setValue={setTitle} />
         <NumberInput

@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import { Timestamp } from "firebase-admin/firestore";
 
-import { firestore, storage } from "./utils/firebaseEmulators";
+import { auth, firestore, storage } from "./utils/firebaseEmulators";
 
 const FEEDS_COLLECTION = firestore
   .collection("api")
@@ -90,7 +90,16 @@ async function seedEpisode(): Promise<void> {
   await EPISODES_COLLECTION.add(CITWM_EPISODE);
 }
 
+async function seedUser(): Promise<void> {
+  await auth.createUser({
+    email: "a@a.com",
+    emailVerified: true,
+    password: "password",
+  });
+}
+
 export async function seed(): Promise<void> {
   await FEEDS_COLLECTION.add(CAPES_IN_THE_WEST_MARCH_FEED);
   await seedEpisode();
+  await seedUser();
 }

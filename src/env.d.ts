@@ -63,6 +63,7 @@ interface PodcastMetadata {
 }
 
 interface PodcastChannel {
+  id: string;
   title: string;
   description: string;
   feedUrl: string;
