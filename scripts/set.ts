@@ -1,6 +1,7 @@
+import { taskWithEmulatorsOn } from "./emulators";
 import { seed } from "./execSeed";
 
-seed()
+taskWithEmulatorsOn(seed)
   .then(() => {
     console.log("done");
   })

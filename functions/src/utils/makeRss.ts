@@ -2,7 +2,7 @@ import { Timestamp } from "firebase-admin/firestore";
 import { PodcastChannel, PodcastEpisode } from "./types";
 
 export function makeRss(feed: PodcastChannel, episodes: PodcastEpisode[]) {
-    return `<?xml version="1.0" encoding="UTF-8"?>
+  return `<?xml version="1.0" encoding="UTF-8"?>
     <rss
         version="2.0"
         xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
@@ -19,7 +19,7 @@ export function makeRss(feed: PodcastChannel, episodes: PodcastEpisode[]) {
 }
 
 function makeChannel(channel: PodcastChannel, items: string) {
-    return `<channel>
+  return `<channel>
         <title>${channel.title}</title>
         <description><![CDATA[${channel.description}]]></description>
         <link>${channel.contact.site}</link>
@@ -40,27 +40,29 @@ function makeChannel(channel: PodcastChannel, items: string) {
         <podcast:locked>${channel.metadata.locked}</podcast:locked>
         <itunes:complete>${channel.metadata.complete}</itunes:complete>
         ${items}
-    </channel>`
+    </channel>`;
 }
 
-function formatCategories(categories: PodcastChannel["metadata"]["categories"]) {
-    return categories
-      .map(({ category, subCategory }) => {
-        if (subCategory === undefined)
-          return `<itunes:category text="${category}"/>`;
-        return `
+function formatCategories(
+  categories: PodcastChannel["metadata"]["categories"],
+) {
+  return categories
+    .map(({ category, subCategory }) => {
+      if (subCategory === undefined)
+        return `<itunes:category text="${category}"/>`;
+      return `
       <itunes:category text="${category}">
         <itunes:category text="${subCategory}"/>
       </itunes:category>
       `;
-      })
-      .join("");
+    })
+    .join("");
 }
 
 function makeItem(episodeData: PodcastEpisode) {
-    return `<item>
+  return `<item>
         <title>${episodeData.title}</title>
-        <link${episodeData.fileData.url}</link>
+        <link>${episodeData.fileData.url}</link>
         <guid isPermaLink="true"><![CDATA[${episodeData.fileData.url}]]></guid>
         <description><![CDATA[${episodeData.description}]]></description>
         <pubDate>${new Timestamp(episodeData.publishDate.seconds, episodeData.publishDate.nanoseconds).toDate().toUTCString()}</pubDate>

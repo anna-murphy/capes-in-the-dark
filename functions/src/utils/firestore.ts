@@ -37,25 +37,29 @@ export async function queryFeed(feed: string) {
   throw new Error(`Unable to find feed "${feed}"`);
 }
 
-
 /**
  * Saves a new document with the whole RSS feed for a given feed.
  * @param data string form of RSS data
  */
 export async function saveFeed(feed: string, data: string) {
-    const db = getFirestoreDb();
-    return db.collection("api/v1/rss").add({
-        feed,
-        rss: data,
-        timestamp: Timestamp.now(),
-    });
+  const db = getFirestoreDb();
+  return db.collection("api/v1/rss").add({
+    feed,
+    rss: data,
+    timestamp: Timestamp.now(),
+  });
 }
 
 export async function getMostRecentRss(feed: string) {
-    const db = getFirestoreDb();
-    const feedItems = await db.collection("api/v1/rss").where("feed", "==", feed).orderBy("timestamp", "desc").limit(1).get();
-    if (feedItems.size === 1) return feedItems.docs[0].data() as RssDocument;
-    throw new Error(`Unable to find an RSS feed for "${feed}"`);
+  const db = getFirestoreDb();
+  const feedItems = await db
+    .collection("api/v1/rss")
+    .where("feed", "==", feed)
+    .orderBy("timestamp", "desc")
+    .limit(1)
+    .get();
+  if (feedItems.size === 1) return feedItems.docs[0].data() as RssDocument;
+  throw new Error(`Unable to find an RSS feed for "${feed}"`);
 }
 
 /**

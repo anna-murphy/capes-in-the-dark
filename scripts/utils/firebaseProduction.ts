@@ -10,3 +10,4 @@ admin.initializeApp({ projectId: "capes-in-the-dark" });
 
 export const firestore = admin.firestore();
 export const storage = admin.storage();
+export const auth = admin.auth();

@@ -14,7 +14,7 @@ export default {
     "firebase-admin/storage",
     "firebase-admin/app",
     "firebase-admin/firestore",
-    "express"
+    "express",
   ],
   output: {
     dir: "lib",
