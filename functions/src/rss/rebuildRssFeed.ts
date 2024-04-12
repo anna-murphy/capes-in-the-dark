@@ -1,4 +1,4 @@
-import { onDocumentCreated } from "firebase-functions/v2/firestore";
+import { onDocumentWritten } from "firebase-functions/v2/firestore";
 import * as logger from "firebase-functions/logger";
 
 import {
@@ -13,7 +13,7 @@ import { makeRss } from "../utils/makeRss";
 /**
  * Update the RSS Feed Document with a new episode once it's created.
  */
-export const rebuildRssFeed = onDocumentCreated(
+export const rebuildRssFeed = onDocumentWritten(
   "api/v1/episodes/{episodeId}",
   async (event) => {
     try {

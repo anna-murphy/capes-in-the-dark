@@ -43,7 +43,6 @@ export function Upload(): JSX.Element {
 }
 */
 
-
 import {
   FileInput,
   NumberInput,

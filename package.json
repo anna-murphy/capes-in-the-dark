@@ -6,12 +6,15 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro check && astro build",
+    "build": "astro build",
+    "build:strict": "astro check && yarn build",
     "preview": "astro preview",
     "astro": "astro",
     "deploy": "yarn build && firebase deploy",
     "lint": "eslint src --ext .astro,.js,.ts,.json",
     "format": "prettier --write .",
+    "functions:build": "cd functions && yarn build",
+    "functions:deploy": "firebase deploy --only functions",
     "emulators": "yarn emulators:start",
     "emulators:start": "firebase emulators:start --import .firebaseEmulators",
     "emulators:clean": "yarn emulators:clear && firebase emulators:start --export-on-exit --import .firebaseEmulators",
@@ -20,8 +23,9 @@
     "emulators:set": "tsx scripts/set.ts",
     "emulators:reset": "yarn emulators:clear && yarn emulators:set",
     "emulators:clear": "rm -rf .firebaseEmulators",
-    "fetch:citwm": "curl https://capes-in-the-dark.web.app/feeds/capes-in-the-west-march/rss.xml",
-    "fetch:citwm:emulated": "curl localhost:5001/capes-in-the-dark/us-central1/feeds/capes-in-the-west-march/rss.xml"
+    "fetch": "tsx scripts/ping.ts",
+    "fetch:ping": "yarn fetch ping",
+    "fetch:citwm": "yarn fetch citwm"
   },
   "dependencies": {
     "@astrojs/check": "^0.5.6",

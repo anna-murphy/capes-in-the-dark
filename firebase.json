@@ -26,7 +26,13 @@
   },
   "hosting": {
     "public": "dist",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "**",
+        "function": "feeds"
+      }
+    ]
   },
   "functions": [
     {
@@ -38,10 +44,7 @@
         "firebase-debug.log",
         "firebase-debug.*.log"
       ],
-      "predeploy": [
-        "npm --prefix \"$RESOURCE_DIR\" run lint",
-        "npm --prefix \"$RESOURCE_DIR\" run build"
-      ]
+      "predeploy": ["yarn functions:build"]
     }
   ]
 }

@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
-import { connectAuthEmulator, getAuth } from "firebase/auth";
-import { connectFirestoreEmulator, getFirestore } from "firebase/firestore";
-import { connectStorageEmulator, getStorage } from "firebase/storage";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: import.meta.env.PUBLIC_FIREBASE_API_KEY,
@@ -17,9 +17,11 @@ export const firestore = getFirestore(app);
 export const storage = getStorage(app);
 export const auth = getAuth(app);
 
+/*
 if (import.meta.env.PUBLIC_EMULATORS === "true") {
   console.log("USING FIREBASE EMULATORS");
   connectFirestoreEmulator(firestore, "127.0.0.1", 8080);
   connectStorageEmulator(storage, "127.0.0.1", 9199);
   connectAuthEmulator(auth, "http://127.0.0.1:9099");
 }
+*/
