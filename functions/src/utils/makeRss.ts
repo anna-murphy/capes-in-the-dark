@@ -1,8 +1,11 @@
 import { Timestamp } from "firebase-admin/firestore";
 import { PodcastChannel, PodcastEpisode } from "./types";
+//import { JSDOM } from "jsdom";
+//import { logger } from "firebase-functions/v1";
 
 export function makeRss(feed: PodcastChannel, episodes: PodcastEpisode[]) {
-  return `<?xml version="1.0" encoding="UTF-8"?>
+  // xmlns:googleplay="http://www.google.com/schemas/play-podcasts/1.0"
+  const rssString = `<?xml version="1.0" encoding="UTF-8"?>
     <rss
         version="2.0"
         xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
@@ -11,11 +14,14 @@ export function makeRss(feed: PodcastChannel, episodes: PodcastEpisode[]) {
         xmlns:media="http://search.yahoo.com/mrss/"
         xmlns:content="http://purl.org/rss/1.0/modules/content/"
         xmlns:podcast="https://podcastindex.org/namespace/1.0"
-        xmlns:googleplay="http://www.google.com/schemas/play-podcasts/1.0"
         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
     >
     ${makeChannel(feed, episodes.map((episode) => makeItem(episode)).join(""))}
     </rss>`;
+    //const a = new JSDOM(rssString, { contentType: "text/xml" });
+    //return a.serialize();
+    //logger.info(a.serialize);
+    return rssString;
 }
 
 function makeChannel(channel: PodcastChannel, items: string) {
@@ -38,9 +44,9 @@ function makeChannel(channel: PodcastChannel, items: string) {
         <atom:link href="${channel.feedUrl}" rel="self" type="application/rss+xml"/>
         <docs>${channel.contact.site}</docs>
         <podcast:locked>${channel.metadata.locked}</podcast:locked>
-        <itunes:complete>${channel.metadata.complete}</itunes:complete>
         ${items}
-    </channel>`;
+        </channel>`;
+  // <itunes:complete>${channel.metadata.complete}</itunes:complete>
 }
 
 function formatCategories(
@@ -62,7 +68,7 @@ function formatCategories(
 function makeItem(episodeData: PodcastEpisode) {
   return `<item>
         <title>${episodeData.title}</title>
-        <link>${episodeData.fileData.url}</link>
+        <link><![CDATA[${episodeData.fileData.url}]]></link>
         <guid isPermaLink="true"><![CDATA[${episodeData.fileData.url}]]></guid>
         <description><![CDATA[${episodeData.description}]]></description>
         <pubDate>${new Timestamp(episodeData.publishDate.seconds, episodeData.publishDate.nanoseconds).toDate().toUTCString()}</pubDate>
@@ -71,7 +77,7 @@ function makeItem(episodeData: PodcastEpisode) {
         <itunes:season>${episodeData.metadata.season}</itunes:season>
         <itunes:episode>${episodeData.metadata.episode}</itunes:episode>
         <itunes:episodeType>${episodeData.metadata.type || "full"}</itunes:episodeType>
-        <enclosure url="${episodeData.fileData.url}" length="${episodeData.fileData.size}" type="audio/mpeg"/>
+        <enclosure url="${episodeData.fileData.url.replace("&", "&amp;")}" length="${episodeData.fileData.size}" type="audio/mpeg"/>
     </item>`;
 }
 /*

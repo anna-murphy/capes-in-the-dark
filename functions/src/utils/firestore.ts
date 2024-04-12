@@ -1,9 +1,10 @@
 import { initializeApp } from "firebase-admin";
-import { DocumentSnapshot, Timestamp, getFirestore } from "firebase-admin/firestore";
 import {
-  Change,
-  FirestoreEvent,
-} from "firebase-functions/v2/firestore";
+  DocumentSnapshot,
+  Timestamp,
+  getFirestore,
+} from "firebase-admin/firestore";
+import { Change, FirestoreEvent } from "firebase-functions/v2/firestore";
 import { PodcastChannel, PodcastEpisode, RssDocument } from "./types";
 
 initializeApp();
@@ -71,10 +72,9 @@ export function getDataFromEvent<T>(
   event: FirestoreEvent<Change<DocumentSnapshot> | undefined>,
 ) {
   if (event === undefined) return null;
-  const eventData = event.data;//event.data.after.data();
+  const eventData = event.data; //event.data.after.data();
   if (eventData === undefined) return null;
   const afterData = eventData.after.data();
   if (afterData === undefined) return null;
   return afterData as T;
 }
-
