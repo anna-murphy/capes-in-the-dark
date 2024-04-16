@@ -50,6 +50,7 @@ import {
   SelectInput,
   CheckboxInput,
   ParagraphInput,
+  SeasonSelect,
 } from "@admin-portal/components/FormInputs";
 import { firestore, storage } from "../utils/firebase";
 import {
@@ -184,10 +185,9 @@ export function Upload(): JSX.Element {
       <h1>Upload an Episode</h1>
       <form onSubmit={submit}>
         <TextInput label="Episode Title" value={title} setValue={setTitle} />
-        <NumberInput
-          label="Season"
+        <SeasonSelect
           value={seasonNumber}
-          setValue={setSeasonNumber}
+          setValue={(season) => {setSeasonNumber(Number(season.toString()))}}
         />
         <NumberInput
           label="Episode"
@@ -204,7 +204,7 @@ export function Upload(): JSX.Element {
           label="Episode Type"
           values={["full", "trailer", "bonus"]}
           value={episodeType}
-          setValue={(value: string) => {
+          setValue={(value: string|number) => {
             setEpisodeType(value as EpisodeType);
           }}
         />
