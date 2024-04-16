@@ -5,9 +5,9 @@ import { Base } from "./Base";
 
 interface SelectInputProps {
   label: string;
-  values: Array<string | { label: string; value: string }>;
-  value: string;
-  setValue: (newValue: string) => void;
+  values: Array<string | { label: string; value: string | number }>;
+  value: string | number;
+  setValue: (newValue: string | number) => void;
 }
 
 export function SelectInput({

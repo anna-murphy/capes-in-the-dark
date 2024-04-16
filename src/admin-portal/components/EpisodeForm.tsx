@@ -6,6 +6,7 @@ import {
   SelectInput,
   CheckboxInput,
   ParagraphInput,
+  SeasonSelect,
 } from "./FormInputs";
 import { Timestamp } from "firebase/firestore";
 
@@ -81,7 +82,16 @@ export function EpisodeForm({
             }));
           }}
         />
-        <NumberInput
+        <SeasonSelect
+          value={editedEpisodeData.season}
+          setValue={(season) => {
+            setEditedEpisodeData((existingData) => ({
+              ...existingData,
+              season: Number(season),
+            }));
+          }}
+        />
+        {/* <NumberInput
           label="Season"
           value={editedEpisodeData.season}
           setValue={(season) => {
@@ -90,7 +100,7 @@ export function EpisodeForm({
               season,
             }));
           }}
-        />
+        /> */}
         <NumberInput
           label="Episode"
           value={editedEpisodeData.episode}

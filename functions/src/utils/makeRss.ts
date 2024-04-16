@@ -15,7 +15,7 @@ export function makeRss(feed: PodcastChannel, episodes: PodcastEpisode[]) {
     >
     ${makeChannel(feed, episodes.map((episode) => makeItem(episode)).join(""))}
     </rss>`;
-    return rssString;
+  return rssString;
 }
 
 function makeChannel(channel: PodcastChannel, items: string) {
