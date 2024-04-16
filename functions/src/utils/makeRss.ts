@@ -1,5 +1,9 @@
 import { Timestamp } from "firebase-admin/firestore";
+import MarkdownIt from "markdown-it";
+
 import { PodcastChannel, PodcastEpisode } from "./types";
+
+const Markdown = MarkdownIt();
 
 export function makeRss(feed: PodcastChannel, episodes: PodcastEpisode[]) {
   const rssString = `<?xml version="1.0" encoding="UTF-8"?>
@@ -58,13 +62,12 @@ function formatCategories(
     })
     .join("");
 }
-
 function makeItem(episodeData: PodcastEpisode) {
   return `<item>
         <title>${episodeData.title}</title>
         <link><![CDATA[${episodeData.fileData.url}]]></link>
         <guid isPermaLink="true"><![CDATA[${episodeData.fileData.url}]]></guid>
-        <description><![CDATA[${episodeData.description}]]></description>
+        <description><![CDATA[${Markdown.render(episodeData.description)}]]></description>
         <pubDate>${new Timestamp(episodeData.publishDate.seconds, episodeData.publishDate.nanoseconds).toDate().toUTCString()}</pubDate>
         <itunes:duration>${episodeData.fileData.duration}</itunes:duration>
         <itunes:explicit>${episodeData.metadata.explicit}</itunes:explicit>
