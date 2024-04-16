@@ -187,7 +187,9 @@ export function Upload(): JSX.Element {
         <TextInput label="Episode Title" value={title} setValue={setTitle} />
         <SeasonSelect
           value={seasonNumber}
-          setValue={(season) => {setSeasonNumber(Number(season.toString()))}}
+          setValue={(season) => {
+            setSeasonNumber(Number(season.toString()));
+          }}
         />
         <NumberInput
           label="Episode"
@@ -204,7 +206,7 @@ export function Upload(): JSX.Element {
           label="Episode Type"
           values={["full", "trailer", "bonus"]}
           value={episodeType}
-          setValue={(value: string|number) => {
+          setValue={(value: string | number) => {
             setEpisodeType(value as EpisodeType);
           }}
         />
