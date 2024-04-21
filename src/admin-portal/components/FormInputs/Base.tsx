@@ -11,8 +11,13 @@ export function Base({
   children,
 }: React.PropsWithChildren<BaseProps>): JSX.Element {
   return (
-    <div>
-      <label htmlFor={inputId}>{label}</label>
+    <div className="flex flex-col gap-0">
+      <label
+        htmlFor={inputId}
+        className="text-sm text-slate-500 dark:text-slate-400"
+      >
+        {label}
+      </label>
       {children}
     </div>
   );

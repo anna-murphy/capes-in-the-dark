@@ -39,22 +39,25 @@ export function EpisodeView({ goToEpisode }: EpisodeViewProps): JSX.Element {
 
   return (
     <>
-      <h1>Episodes</h1>
-      <ul>
+      <h1 className="text-lg">Episodes</h1>
+      <ul role="list" className="list-disc pl-4">
         {episodes.map((episode) => (
-          <li>
+          <li className="list-item">
             <a
               href="#"
               onClick={() => {
                 goToEpisode(episode.id);
               }}
+              className="text-sky-700 hover:text-sky-800 dark:text-sky-200 hover:dark:text-sky-300 underline"
             >
               {episode.id}
             </a>
           </li>
         ))}
       </ul>
-      {error !== "" ? <span>{error}</span> : undefined}
+      {error !== "" ? (
+        <span className="text-red-700 dark:text-red-400">{error}</span>
+      ) : undefined}
     </>
   );
 }

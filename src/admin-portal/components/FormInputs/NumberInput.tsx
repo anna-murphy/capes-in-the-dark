@@ -25,6 +25,7 @@ export function NumberInput({
           const value = Number(event.target.value);
           if (!isNaN(value)) setValue(value);
         }}
+        className="py-1 px-2 rounded-md w-96 dark:text-slate-950"
       />
     </Base>
   );

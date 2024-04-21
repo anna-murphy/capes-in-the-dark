@@ -21,23 +21,28 @@ export function AdminPortal(): JSX.Element {
       ) : undefined}
       {credentials !== undefined ? (
         <>
-          <div>
-            <a
-              onClick={() => {
-                if (page !== "EPISODES") setPage("EPISODES");
-              }}
-              aria-disabled={page === "EPISODES"}
-            >
-              View Episodes
-            </a>
-            <a
-              onClick={() => {
-                if (page !== "UPLOAD") setPage("UPLOAD");
-              }}
-              aria-disabled={page === "UPLOAD"}
-            >
-              Upload
-            </a>
+          <div className="w-full flex flex-row gap-2">
+            <h1 className="text-xl flex-1">Podcast Admin</h1>
+            {page !== "EPISODES" ? (
+              <button
+                onClick={() => {
+                  setPage("EPISODES");
+                }}
+                className="rounded-md bg-sky-700 dark:bg-sky-800 hover:bg-sky-900 text-slate-100 px-4 py-1"
+              >
+                View Episodes
+              </button>
+            ) : undefined}
+            {page !== "UPLOAD" ? (
+              <button
+                onClick={() => {
+                  setPage("UPLOAD");
+                }}
+                className="rounded-md bg-sky-700 dark:bg-sky-800  hover:bg-sky-900 text-slate-100 px-4 py-1"
+              >
+                Upload
+              </button>
+            ) : undefined}
           </div>
           {page === "EPISODES" ? (
             <EpisodeView

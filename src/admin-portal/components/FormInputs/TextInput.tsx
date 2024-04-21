@@ -26,6 +26,7 @@ export function TextInput({
         onChange={(event) => {
           setValue(event.target.value);
         }}
+        className="py-1 px-2 rounded-md w-96 dark:text-slate-950"
       />
     </Base>
   );

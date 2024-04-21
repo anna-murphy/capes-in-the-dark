@@ -23,7 +23,11 @@ export function ParagraphInput({
         onChange={(event) => {
           setValue(event.target.value);
         }}
+        className="py-2 px-2 rounded-md w-96 h-64 dark:text-slate-950 font-mono"
       />
+      <span className="mt-1 text-xs italic text-slate-500 dark:text-slate-400">
+        This field supports Markdown input!
+      </span>
     </Base>
   );
 }

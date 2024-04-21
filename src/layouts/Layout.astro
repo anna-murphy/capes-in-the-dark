@@ -5,8 +5,9 @@ interface Props {
 
 const { title } = Astro.props;
 
-import "@styles/layout.css";
-import "@styles/reset.css";
+import "@styles/base.css";
+import Nav from "@components/Nav.astro";
+import Footer from "@components/Footer.astro";
 ---
 <!doctype html>
 <html lang="en">
@@ -20,19 +21,19 @@ import "@styles/reset.css";
 		<meta name="generator" content={Astro.generator} />
 		<title>Capes in the Dark - {title}</title>
 	</head>
-	<body>
+	<body class="dark:bg-slate-950 bg-slate-50 text-sky-950 dark:text-sky-50">
 		<div class="page-wrapper">
-			<h1>Capes in the Dark - {title}</h1>
+			<Nav title={title} />
 			<main class="full-bleed-wrapper">
 				<slot />
 			</main>
-			<div class="spacer"></div>
-			<footer></footer>
+			<div class="flex-1"></div>
+			<Footer />
 		</div>
 	</body>
 </html>
 
-<style scoped>
+<style is:global>
 	.page-wrapper {
 		width: 100%;
 		min-height: 100vh;
@@ -42,7 +43,24 @@ import "@styles/reset.css";
 		justify-content: flex-start;
 	}
 
-	.spacer {
-		flex: 1;
+	.full-bleed-wrapper {
+		width: 100%;
+		display: grid;
+		grid-template-columns:
+			1fr
+			min(65ch, calc(100% - calc(2 * 8px)))
+			1fr;
+		column-gap: 8px;
+		row-gap: 8px;
+		margin: 8px 0;
+	}
+
+	.full-bleed-wrapper * {
+		grid-column: 2;
+	}
+
+	.full-bleed {
+		width: 100%;
+		grid-column: 1 / -1;
 	}
 </style>

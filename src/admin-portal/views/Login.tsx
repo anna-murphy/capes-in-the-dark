@@ -40,7 +40,10 @@ export function Login({ setCredentials }: LoginProps): JSX.Element {
 
   return (
     <>
-      <form onSubmit={doLogin}>
+      <form
+        onSubmit={doLogin}
+        className="flex flex-col gap-4 content-center items-center py-4 rounded-md bg-slate-100 dark:bg-slate-900"
+      >
         <TextInput label="Email" value={email} setValue={setEmail} />
         <TextInput
           label="Password"
@@ -48,9 +51,18 @@ export function Login({ setCredentials }: LoginProps): JSX.Element {
           setValue={setPassword}
           password
         />
-        <button type="submit">Login</button>
+        <button
+          type="submit"
+          className="rounded-md bg-sky-700 dark:bg-sky-800  hover:bg-sky-900 text-slate-100 px-4 py-1"
+        >
+          Login
+        </button>
+        {error !== "" ? (
+          <p role="note" className="text-red-700 dark:text-red-400">
+            {error}
+          </p>
+        ) : undefined}
       </form>
-      {error !== "" ? <p>{error}</p> : undefined}
     </>
   );
 }
