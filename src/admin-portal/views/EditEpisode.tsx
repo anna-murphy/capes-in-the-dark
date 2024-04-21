@@ -39,7 +39,7 @@ export function EditEpisode({ id }: EditEpisodeProps): JSX.Element {
 
   return (
     <>
-      <h1>Edit Episode</h1>
+      <h1 className="text-lg">Edit Episode</h1>
       {error !== "" ? <p>{error}</p> : undefined}
       {episode !== undefined ? (
         <EpisodeForm

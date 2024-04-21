@@ -25,6 +25,7 @@ export function SelectInput({
         onChange={(event) => {
           setValue(event.target.value);
         }}
+        className="py-1 px-2 rounded-md w-96 dark:text-slate-950 bg-white"
       >
         <option disabled>~~Choose One~~</option>
         {values.map((opt) => {

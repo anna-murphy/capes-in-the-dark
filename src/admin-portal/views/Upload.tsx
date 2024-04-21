@@ -182,8 +182,11 @@ export function Upload(): JSX.Element {
 
   return (
     <>
-      <h1>Upload an Episode</h1>
-      <form onSubmit={submit}>
+      <h1 className="text-lg">Upload an Episode</h1>
+      <form
+        onSubmit={submit}
+        className="flex flex-col gap-4 content-center items-center py-4 rounded-md bg-slate-100 dark:bg-slate-900"
+      >
         <TextInput label="Episode Title" value={title} setValue={setTitle} />
         <SeasonSelect
           value={seasonNumber}
@@ -220,7 +223,12 @@ export function Upload(): JSX.Element {
           value={description}
           setValue={setDescription}
         />
-        <button type="submit">Upload</button>
+        <button
+          type="submit"
+          className="rounded-md bg-sky-700 dark:bg-sky-800  hover:bg-sky-900 text-slate-100 px-4 py-1"
+        >
+          Upload
+        </button>
       </form>
       {error !== "" ? <p>{error}</p> : undefined}
     </>

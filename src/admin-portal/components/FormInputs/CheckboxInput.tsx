@@ -21,7 +21,7 @@ export function CheckboxInput({
         id={inputId}
         type="checkbox"
         checked={value}
-        onChange={(event) => {
+        onChange={() => {
           setValue(!value);
         }}
       />

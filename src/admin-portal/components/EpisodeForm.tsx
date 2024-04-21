@@ -71,7 +71,10 @@ export function EpisodeForm({
 
   return (
     <>
-      <form onSubmit={doSubmit}>
+      <form
+        onSubmit={doSubmit}
+        className="flex flex-col gap-4 content-center items-center py-4 rounded-md bg-slate-100 dark:bg-slate-900"
+      >
         <TextInput
           label="Episode Title"
           value={editedEpisodeData.title}
@@ -91,16 +94,6 @@ export function EpisodeForm({
             }));
           }}
         />
-        {/* <NumberInput
-          label="Season"
-          value={editedEpisodeData.season}
-          setValue={(season) => {
-            setEditedEpisodeData((existingData) => ({
-              ...existingData,
-              season,
-            }));
-          }}
-        /> */}
         <NumberInput
           label="Episode"
           value={editedEpisodeData.episode}
@@ -155,7 +148,12 @@ export function EpisodeForm({
             }));
           }}
         />
-        <button type="submit">{submitLabel}</button>
+        <button
+          type="submit"
+          className="rounded-md bg-sky-700 dark:bg-sky-800  hover:bg-sky-900 text-slate-100 px-4 py-1"
+        >
+          {submitLabel}
+        </button>
       </form>
       {error !== "" ? <p>{error}</p> : undefined}
     </>
