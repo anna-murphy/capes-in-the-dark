@@ -1,0 +1,16 @@
+---
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+
+function makeNavItemClassList(key: string) {
+    return ["p-2", "rounded-lg", title === key ? "bg-slate-700 text-sky-50" : false];
+}
+---
+<nav class="flex justify-around bg-slate-100 dark:bg-slate-800 p-2 font-sans text-lg">
+    <a href="/" class:list={[...makeNavItemClassList("Home"), "text-xl"]}><h1>Capes</h1></a>
+    <a href="/" class:list={makeNavItemClassList("Game")}><h2>Game</h2></a>
+    <a href="/admin" class:list={makeNavItemClassList("Admin")}><h2>Admin</h2></a>
+</nav>
