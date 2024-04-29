@@ -56,11 +56,12 @@ export function EpisodeForm({
       event.preventDefault();
       try {
         const { downloadUrl, size } = await doParseFile(file);
+        const publishDate = episodeData === undefined ? Timestamp.fromDate(new Date()) : episodeData.publishDate as unknown as Timestamp;
         submit(
           makeEpisodeData({
             ...editedEpisodeData,
             file: { downloadUrl, size },
-          }),
+          }, publishDate),
         );
       } catch (ex) {
         setError((ex as { message: string }).message);
@@ -184,7 +185,7 @@ function startingEpisodeData(
   };
 }
 
-function makeEpisodeData(editedData: EditedEpisodeData): PodcastEpisode {
+function makeEpisodeData(editedData: EditedEpisodeData, publishDate: Timestamp): PodcastEpisode {
   return {
     feed: "Capes in the West March",
     title: editedData.title,
@@ -202,6 +203,6 @@ function makeEpisodeData(editedData: EditedEpisodeData): PodcastEpisode {
       duration: editedData.duration,
     },
     // Save this as a firebase Timestamp to upload to the database.
-    publishDate: Timestamp.fromDate(new Date()) as unknown as Date,
+    publishDate: publishDate as unknown as Date, // Timestamp.fromDate(new Date()) as unknown as Date,
   } satisfies PodcastEpisode;
 }

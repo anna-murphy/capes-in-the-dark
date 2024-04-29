@@ -50,7 +50,7 @@ export function EpisodeView({ goToEpisode }: EpisodeViewProps): JSX.Element {
               }}
               className="text-sky-700 hover:text-sky-800 dark:text-sky-200 hover:dark:text-sky-300 underline"
             >
-              {episode.id}
+              {formatEpisodeTitle(episode.data() as PodcastEpisode)}
             </a>
           </li>
         ))}
@@ -60,4 +60,8 @@ export function EpisodeView({ goToEpisode }: EpisodeViewProps): JSX.Element {
       ) : undefined}
     </>
   );
+}
+
+function formatEpisodeTitle(episode: PodcastEpisode): JSX.Element {
+  return <>{episode.title} <span className="text-sky-600 dark:text-sky:300">({episode.metadata.season}-{episode.metadata.episode})</span></>;
 }
