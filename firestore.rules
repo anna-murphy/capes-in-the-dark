@@ -2,8 +2,21 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if true;
+    function requireAuth() {
+      return request.auth != null;
+    }
+
+    match /api/v1/{document=**} {
+      allow read: if true;
+      allow write: if false;
+
+      match /episodes/{episode} {
+        allow write: if requireAuth();
+      }
+
+      // match /feeds/{feed} {}
+      // match /rss/{rssItem} {}
+      // match /static/{staticDoc} {}
     }
   }
 }
