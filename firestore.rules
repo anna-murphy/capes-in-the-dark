@@ -14,14 +14,9 @@ service cloud.firestore {
         allow write: if requireAuth();
       }
 
-      match /feeds/{feed} {
-      }
-      
-      match /rss/{rssItem} {
-      }
-
-      match /static/{staticDoc} {
-      }
+      // match /feeds/{feed} {}
+      // match /rss/{rssItem} {}
+      // match /static/{staticDoc} {}
     }
   }
 }
