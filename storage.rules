@@ -5,9 +5,13 @@ rules_version = '2';
 //    /databases/(default)/documents/users/$(request.auth.uid)).data.isAdmin;
 service firebase.storage {
   match /b/{bucket}/o {
+    function requireAuth() {
+      return request.auth != null;
+    }
+
     match /recordings/{recordingId} {
       allow read: if true;
-      allow create: if true;
+      allow create: if requireAuth() && request.resource.contentType.matches('audio/mpeg');
       allow delete: if false;
     }
   }
