@@ -12,7 +12,12 @@ import { Timestamp } from "firebase/firestore";
 
 interface EpisodeFormPromps {
   episodeData?: PodcastEpisode;
-  parseFile?: (file: File) => Promise<{ downloadUrl: string; size: number }>;
+  parseFile?: (
+    file: File,
+    season: number,
+    episode: number,
+    title: string,
+  ) => Promise<{ downloadUrl: string; size: number }>;
   submit: (episode: PodcastEpisode) => void;
   submitLabel: string;
 }
@@ -44,7 +49,12 @@ export function EpisodeForm({
       if (parseFile === undefined) return editedEpisodeData.file;
       if (uploadedFile === undefined)
         throw new Error("Don't forget to upload an episode!");
-      return await parseFile(uploadedFile);
+      return await parseFile(
+        uploadedFile,
+        editedEpisodeData.season,
+        editedEpisodeData.episode,
+        editedEpisodeData.title,
+      );
     },
     [parseFile, editedEpisodeData],
   );
@@ -56,12 +66,18 @@ export function EpisodeForm({
       event.preventDefault();
       try {
         const { downloadUrl, size } = await doParseFile(file);
-        const publishDate = episodeData === undefined ? Timestamp.fromDate(new Date()) : episodeData.publishDate as unknown as Timestamp;
+        const publishDate =
+          episodeData === undefined
+            ? Timestamp.fromDate(new Date())
+            : (episodeData.publishDate as unknown as Timestamp);
         submit(
-          makeEpisodeData({
-            ...editedEpisodeData,
-            file: { downloadUrl, size },
-          }, publishDate),
+          makeEpisodeData(
+            {
+              ...editedEpisodeData,
+              file: { downloadUrl, size },
+            },
+            publishDate,
+          ),
         );
       } catch (ex) {
         setError((ex as { message: string }).message);
@@ -185,7 +201,10 @@ function startingEpisodeData(
   };
 }
 
-function makeEpisodeData(editedData: EditedEpisodeData, publishDate: Timestamp): PodcastEpisode {
+function makeEpisodeData(
+  editedData: EditedEpisodeData,
+  publishDate: Timestamp,
+): PodcastEpisode {
   return {
     feed: "Capes in the West March",
     title: editedData.title,

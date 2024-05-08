@@ -63,5 +63,12 @@ export function EpisodeView({ goToEpisode }: EpisodeViewProps): JSX.Element {
 }
 
 function formatEpisodeTitle(episode: PodcastEpisode): JSX.Element {
-  return <>{episode.title} <span className="text-sky-600 dark:text-sky:300">({episode.metadata.season}-{episode.metadata.episode})</span></>;
+  return (
+    <>
+      {episode.title}{" "}
+      <span className="text-sky-600 dark:text-sky:300">
+        ({episode.metadata.season}-{episode.metadata.episode})
+      </span>
+    </>
+  );
 }
