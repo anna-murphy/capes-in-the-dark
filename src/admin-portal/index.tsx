@@ -1,9 +1,7 @@
 import React from "react";
-
-import { EpisodeView, Login, Upload } from "./views";
-
 import type { UserCredential } from "firebase/auth";
-import { EditEpisode } from "./views/EditEpisode";
+
+import { EpisodeView, EditEpisode, Login, Upload } from "./views";
 
 const PAGES = ["EPISODES", "EDIT", "UPLOAD"] as const;
 type Page = (typeof PAGES)[number];
@@ -53,9 +51,20 @@ export function AdminPortal(): JSX.Element {
             />
           ) : undefined}
           {page === "EDIT" && editId !== undefined ? (
-            <EditEpisode id={editId} />
+            <EditEpisode
+              id={editId}
+              onFinish={() => {
+                setPage("EPISODES");
+              }}
+            />
           ) : undefined}
-          {page === "UPLOAD" ? <Upload /> : undefined}
+          {page === "UPLOAD" ? (
+            <Upload
+              onFinish={() => {
+                setPage("EPISODES");
+              }}
+            />
+          ) : undefined}
         </>
       ) : undefined}
     </>

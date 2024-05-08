@@ -2,13 +2,14 @@ import React from "react";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 
 import { firestore } from "@admin-portal/utils/firebase";
-import { EpisodeForm } from "@admin-portal/components/EpisodeForm";
+import { EpisodeForm } from "@admin-portal/components";
 
 interface EditEpisodeProps {
   id: string;
+  onFinish: () => void;
 }
 
-export function EditEpisode({ id }: EditEpisodeProps): JSX.Element {
+export function EditEpisode({ id, onFinish }: EditEpisodeProps): JSX.Element {
   const documentReference = React.useMemo(
     () => doc(firestore, `api/v1/episodes/${id}`),
     [id],
@@ -32,7 +33,13 @@ export function EditEpisode({ id }: EditEpisodeProps): JSX.Element {
 
   const update = React.useCallback(
     (editedEpisode: PodcastEpisode) => {
-      void setDoc(documentReference, editedEpisode);
+      setDoc(documentReference, editedEpisode)
+        .then(() => {
+          onFinish();
+        })
+        .catch((ex) => {
+          setError((ex as { message: string }).message);
+        });
     },
     [documentReference],
   );
