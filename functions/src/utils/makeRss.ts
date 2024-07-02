@@ -64,7 +64,7 @@ function formatCategories(
 }
 function makeItem(episodeData: PodcastEpisode) {
   return `<item>
-        <title>${episodeData.title}</title>
+        <title><![CDATA[${episodeData.title}]]></title>
         <link><![CDATA[${episodeData.fileData.url}]]></link>
         <guid isPermaLink="true"><![CDATA[${episodeData.fileData.url}]]></guid>
         <description><![CDATA[${Markdown.render(episodeData.description)}]]></description>
