@@ -24,9 +24,9 @@ export function makeRss(feed: PodcastChannel, episodes: PodcastEpisode[]) {
 
 function makeChannel(channel: PodcastChannel, items: string) {
   return `<channel>
-        <title>${channel.title}</title>
+        <title><![CDATA[${channel.title}]]></title>
         <description><![CDATA[${channel.description}]]></description>
-        <link>${channel.contact.site}</link>
+        <link><![CDATA[${channel.contact.site}]]></link>
         <language>${channel.metadata.language}</language>
         <itunes:author>${channel.contact.author}</itunes:author>
         <itunes:summary><![CDATA[${channel.description}]]></itunes:summary>
@@ -38,9 +38,9 @@ function makeChannel(channel: PodcastChannel, items: string) {
         </itunes:owner>
         <itunes:explicit>${channel.metadata.explicit}</itunes:explicit>
         <itunes:type>${channel.metadata.type}</itunes:type>
-        <itunes:new-feed-url>${channel.feedUrl}</itunes:new-feed-url>
+        <itunes:new-feed-url><![CDATA[${channel.feedUrl}]]></itunes:new-feed-url>
         <atom:link href="${channel.feedUrl}" rel="self" type="application/rss+xml"/>
-        <docs>${channel.contact.site}</docs>
+        <docs><![CDATA[${channel.contact.site}]]></docs>
         <podcast:locked>${channel.metadata.locked}</podcast:locked>
         ${items}
         </channel>`;
